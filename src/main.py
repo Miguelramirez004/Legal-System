@@ -453,6 +453,12 @@ class DocumentExporter:
             print(f"Error al generar PDF: {str(e)}")
             raise
 def init_session_state():
+
+    if "api_key" not in st.session_state:
+        try:
+            st.session_state.api_key = st.secrets["OPENAI_API_KEY"]
+        except:
+            st.session_state.api_key = ""
     if "api_key" not in st.session_state:
         st.session_state.api_key = ""
     if "pdf_file" not in st.session_state:
@@ -1092,6 +1098,25 @@ def main():
     
     # Sidebar navigation
     st.sidebar.title("Sistema Legal RAG")
+    navigation = st.sidebar.radio(
+        "Navegación",
+        ["Inicio", "Análisis de Sentencia", "Gestión de Tareas", "Anotaciones",
+         "Estadísticas", "Plantillas", "Configuración"]
+    )
+
+
+    if not st.session_state.api_key:
+        st.sidebar.text_input(
+            "OpenAI API Key",
+            type="password",
+            key="api_key",
+            value=st.session_state.api_key,
+            help="Introduce tu OpenAI API key para usar la aplicación"
+        )
+        st.sidebar.warning("Por favor, introduce tu OpenAI API key para comenzar.")
+    else:
+        st.sidebar.success("API Key configurada ✓")
+    
     navigation = st.sidebar.radio(
         "Navegación",
         ["Inicio", "Análisis de Sentencia", "Gestión de Tareas", "Anotaciones",
