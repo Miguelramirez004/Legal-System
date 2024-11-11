@@ -1119,7 +1119,7 @@ def main():
         "Navegación",
         ["Inicio", "Análisis de Sentencia", "Gestión de Tareas", "Anotaciones",
          "Estadísticas", "Plantillas", "Configuración"]
-  
+    )         
     
     # Route to appropriate page
     if navigation == "Inicio":
