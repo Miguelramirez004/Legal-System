@@ -1095,11 +1095,12 @@ def main():
     # Initialize session state
     init_session_state()
 
+    # API Key handling in sidebar
     if not st.session_state.api_key:
         st.sidebar.text_input(
             "OpenAI API Key",
             type="password",
-            key="api_key",
+            key="api_key_input",  # Added unique key
             value=st.session_state.api_key,
             help="Introduce tu OpenAI API key para usar la aplicación"
         )
@@ -1107,19 +1108,14 @@ def main():
     else:
         st.sidebar.success("API Key configurada ✓")
     
-    navigation = st.sidebar.radio(
-        "Navegación",
-        ["Inicio", "Análisis de Sentencia", "Gestión de Tareas", "Anotaciones",
-         "Estadísticas", "Plantillas", "Configuración"]
-    )
-    
-    # Sidebar navigation
+    # Single navigation radio button
     st.sidebar.title("Sistema Legal RAG")
     navigation = st.sidebar.radio(
         "Navegación",
         ["Inicio", "Análisis de Sentencia", "Gestión de Tareas", "Anotaciones",
-         "Estadísticas", "Plantillas", "Configuración"]
-    )         
+         "Estadísticas", "Plantillas", "Configuración"],
+        key="nav_radio"  # Added unique key
+    )
     
     # Route to appropriate page
     if navigation == "Inicio":
@@ -1136,6 +1132,5 @@ def main():
         show_templates()
     elif navigation == "Configuración":
         show_settings()
-
 if __name__ == "__main__":
     main()
